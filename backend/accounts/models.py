@@ -19,8 +19,9 @@ class CustomUser(AbstractUser):
     last_name = models.CharField(max_length=50,blank=True)
     profile_picture = models.ImageField(upload_to='profile_pics/',null=True,blank=True,default='profile_pics/default.jpg')
     bio = models.TextField(null = True,blank=True)
-    status = models.BooleanField(default=False)
-
+    isOnline = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
     
     objects = CustomUserManager()
 

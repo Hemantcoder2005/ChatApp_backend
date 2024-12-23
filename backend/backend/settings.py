@@ -11,11 +11,14 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = '/media/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -40,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     "accounts",
     "api",
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -51,9 +55,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+}
 ROOT_URLCONF = "backend.urls"
-
+AUTH_USER_MODEL = 'accounts.CustomUser'
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
