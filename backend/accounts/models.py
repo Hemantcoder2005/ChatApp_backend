@@ -22,14 +22,50 @@ class CustomUser(AbstractUser):
     isOnline = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    
+    friends = models.ManyToManyField('self',symmetrical=True,blank=True)
+    pendingRequest = models.ManyToManyField("self",symmetrical=False,blank = True,related_name="received_requests")
+    requested = models.ManyToManyField("self",symmetrical=False,blank = True,related_name="sent_requests")
     objects = CustomUserManager()
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ['email']
     def __str__(self):
-        return self.email
+        return self.username
     
     @property
     def is_superuser(self):
         return self.is_admin
+
+    def addFriend(self,user):
+        """
+        Add friends user in friends section 
+        """
+        if self !=user and self.pendingRequest.filter(id=user.id).exists():
+            self.friends.add(user)
+            user.remove_request(self)
+            return True
+        return False
+    def removeFriend(self,user):
+        """
+        Remove Friend
+        """
+        if self != user and self.are_friends(user):
+            self.friends.remove(user)
+            user.remove_request(self)
+            return True
+        return False
+    def send_request(self,user):
+        """
+        Update pending request and requested field
+        """
+        if self!=user:
+            user.pendingRequest.add(self)
+            self.requested.add(user)
+            return True
+        return False
+    def remove_request(self,user):
+        if self!=user:
+            user.pendingRequest.remove(self)
+            self.requested.remove(user)
+    def are_friends(self, user):
+        return self.friends.filter(id=user.id).exists()
