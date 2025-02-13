@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from accounts import models
-
+from notification.views import send_notification 
 User = models.CustomUser
 # Create your views here.
 def sendRequest():

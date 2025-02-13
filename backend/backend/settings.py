@@ -39,6 +39,8 @@ CSRF_TRUSTED_ORIGINS = [
 CORS_ALLOW_ALL_ORIGINS = True
 
 INSTALLED_APPS = [
+     "daphne",
+     "channels",
     'corsheaders',
     "django.contrib.admin",
     "django.contrib.auth",
@@ -50,9 +52,18 @@ INSTALLED_APPS = [
     "accounts",
     "api",
     'rest_framework_simplejwt',
-    "friends_handler"
+    "friends_handler",
+    "notification",
     
 ]
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],  
+        },
+    },
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -91,7 +102,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "backend.wsgi.application"
-
+ASGI_APPLICATION = "backend.asgi.application"
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
