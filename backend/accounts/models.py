@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .CustomUserManager import CustomUserManager
+
 class CustomUser(AbstractUser):
     groups = models.ManyToManyField(
         'auth.Group',
@@ -43,6 +44,10 @@ class CustomUser(AbstractUser):
         if self !=user and self.pendingRequest.filter(id=user.id).exists():
             self.friends.add(user)
             user.remove_request(self)
+            from chat.models import PersonalChatroom
+            # creating Private ChatRoom them
+            users = sorted([self,user],key=lambda p:p.username)
+            PersonalChatroom.objects.create(user1 = users[0], user2 = users[1])
             return True
         return False
     def removeFriend(self,user):
@@ -52,6 +57,10 @@ class CustomUser(AbstractUser):
         if self != user and self.are_friends(user):
             self.friends.remove(user)
             user.remove_request(self)
+            from chat.models import PersonalChatroom
+            # creating Private ChatRoom them
+            users = sorted([self,user],key=lambda p:p.username)
+            PersonalChatroom.objects.filter(user1=users[0], user2=users[1]).delete()
             return True
         return False
     def send_request(self,user):

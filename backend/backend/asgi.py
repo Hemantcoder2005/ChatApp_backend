@@ -14,7 +14,8 @@ from channels.routing import ProtocolTypeRouter,URLRouter
 from channels.auth import AuthMiddlewareStack
 from django.urls import path
 from notification.consumer import NotificationConsumer
-
+from chat.consumer import ChatConsumer
+from Middleware import JWTAuthMiddleware
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
 
 
@@ -23,10 +24,11 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
 application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),
-        "websocket" : AuthMiddlewareStack(
+        "websocket" : JWTAuthMiddleware.JWTAuthMiddlewareStack(
             URLRouter(
                 [
                     path("ws/notifications/",NotificationConsumer.as_asgi()),
+                    path("ws/chat/",ChatConsumer.as_asgi()),
                 ]
             )
         )
