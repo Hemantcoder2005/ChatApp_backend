@@ -62,9 +62,22 @@ CHANNEL_LAYERS = {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             "hosts": [('127.0.0.1', 6379)],  
+            # "hosts": [('redis-10706.crce182.ap-south-1-1.ec2.redns.redis-cloud.com', 10706)],  
         },
     },
 }
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [
+#                 "redis://default:2d8lFadtaRjLxDnqxQO1e8enoum9gcEc@redis-10706.crce182.ap-south-1-1.ec2.redns.redis-cloud.com:10706/0"
+#             ],
+#         },
+#     },
+# }
+
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -78,7 +91,7 @@ MIDDLEWARE = [
     
 ]
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),  
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
 
@@ -115,9 +128,20 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    # "default": {
+    #     "ENGINE": "django.db.backends.sqlite3",
+    #     "NAME": BASE_DIR / "db.sqlite3",
+    # }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'defaultdb',       # From Aiven
+        'USER': 'avnadmin',          # From Aiven
+        'PASSWORD': 'AVNS_edgQH_7vbIA3-E2y-1j',  # From Aiven
+        'HOST': 'chatapp-hemantnarula2203-3f8e.h.aivencloud.com',          # From Aiven
+        'PORT': '25148',          # Default: 25060 (Aiven)
+        'OPTIONS': {
+            'sslmode': 'require'  # Aiven requires SSL
+        },
     }
 }
 
