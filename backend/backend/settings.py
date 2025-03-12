@@ -13,7 +13,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os
+from dotenv import load_dotenv
 
+
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -57,25 +60,23 @@ INSTALLED_APPS = [
     'chat',
     
 ]
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],  
-            # "hosts": [('redis-10706.crce182.ap-south-1-1.ec2.redns.redis-cloud.com', 10706)],  
-        },
-    },
-}
 # CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels_redis.core.RedisChannelLayer",
-#         "CONFIG": {
-#             "hosts": [
-#                 "redis://default:2d8lFadtaRjLxDnqxQO1e8enoum9gcEc@redis-10706.crce182.ap-south-1-1.ec2.redns.redis-cloud.com:10706/0"
-#             ],
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             "hosts": [('127.0.0.1', 6379)],  
+#             # "hosts": [('redis-10706.crce182.ap-south-1-1.ec2.redns.redis-cloud.com', 10706)],  
 #         },
 #     },
 # }
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.getenv("REDIS_URL")],
+        },
+    },
+}
 
 
 
@@ -133,17 +134,15 @@ DATABASES = {
     #     "NAME": BASE_DIR / "db.sqlite3",
     # }
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'defaultdb',       # From Aiven
-        'USER': 'avnadmin',          # From Aiven
-        'PASSWORD': 'AVNS_edgQH_7vbIA3-E2y-1j',  # From Aiven
-        'HOST': 'chatapp-hemantnarula2203-3f8e.h.aivencloud.com',          # From Aiven
-        'PORT': '25148',          # Default: 25060 (Aiven)
-        'OPTIONS': {
-            'sslmode': 'require'  # Aiven requires SSL
-        },
+        'ENGINE': os.getenv("DB_ENGINE"),
+        'NAME': os.getenv("DB_NAME"),
+        'USER': os.getenv("DB_USER"),
+        'PASSWORD': os.getenv("DB_PASSWORD"),
+        'HOST': os.getenv("DB_HOST"),
+        'PORT': os.getenv("DB_PORT"),
     }
 }
+
 
 
 # Password validation
