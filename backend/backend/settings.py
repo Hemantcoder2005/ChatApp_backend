@@ -29,9 +29,9 @@ MEDIA_URL = '/media/'
 SECRET_KEY = "django-insecure-908^p(rtzx^!sxvg-3fj2g-x2$kgehwbx6lnn4%s^3hku$0h-e"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:5173',
