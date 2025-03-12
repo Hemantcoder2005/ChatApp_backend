@@ -7,3 +7,4 @@ djangorestframework-simplejwt
 channels-redis
 psycopg2-binary
 python-dotenv
+gunicorn
