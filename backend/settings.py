@@ -35,7 +35,8 @@ ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:5173',
-    "http://localhost:3000'"
+    "http://localhost:3000",
+    "https://chatapp-backend-qjug.onrender.com/"
     
 ]
 
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
     "friends_handler",
     "notification",
     'chat',
+    'landing',
     
 ]
 # CHANNEL_LAYERS = {
@@ -105,7 +107,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR,"templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
