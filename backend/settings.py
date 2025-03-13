@@ -36,13 +36,13 @@ ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost",
     "http://127.0.0.1",
-    "https://chatapp-backend-qjug.onrender.com",
+    "https://chatapp-backend-85g7.onrender.com",
 ]
 
 CORS_ALLOWED_ORIGINS = [ 
     "http://localhost",
     "http://127.0.0.1",
-    "https://chatapp-backend-qjug.onrender.com",
+    "https://chatapp-backend-85g7.onrender.com",
 ]
 
 
