@@ -34,15 +34,21 @@ DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:5173',
-    "http://localhost:3000",
-    "https://chatapp-backend-qjug.onrender.com/"
-    
+    "http://localhost",
+    "http://127.0.0.1",
+    "https://chatapp-backend-qjug.onrender.com",
 ]
+
+CORS_ALLOWED_ORIGINS = [ 
+    "http://localhost",
+    "http://127.0.0.1",
+    "https://chatapp-backend-qjug.onrender.com",
+]
+
 
 # Application definition
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
 
 INSTALLED_APPS = [
      "daphne",
