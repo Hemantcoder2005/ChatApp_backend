@@ -38,6 +38,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://127.0.0.1",
     "https://chatapp-backend-85g7.onrender.com",
     "http://localhost:5173/",
+    "https://gupshup-hemant.vercel.app/",
 ]
 
 CORS_ALLOWED_ORIGINS = [ 
@@ -45,6 +46,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1",
     "http://localhost:5173/",
     "https://chatapp-backend-85g7.onrender.com",
+    "https://gupshup-hemant.vercel.app/",
 ]
 
 
