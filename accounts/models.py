@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .CustomUserManager import CustomUserManager
-
+from cloudinary.models import CloudinaryField
 class CustomUser(AbstractUser):
     groups = models.ManyToManyField(
         'auth.Group',
@@ -18,7 +18,7 @@ class CustomUser(AbstractUser):
     username = models.CharField(max_length= 100,unique=True)
     first_name = models.CharField(max_length=50,blank= True)
     last_name = models.CharField(max_length=50,blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/',null=True,blank=True,default='profile_pics/default.jpg')
+    profile_picture = CloudinaryField('image', default='default.jpg',)
     bio = models.TextField(null = True,blank=True)
     isOnline = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)

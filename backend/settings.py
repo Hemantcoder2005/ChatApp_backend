@@ -14,14 +14,17 @@ from pathlib import Path
 from datetime import timedelta
 import os
 from dotenv import load_dotenv
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -37,16 +40,16 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost",
     "http://127.0.0.1",
     "https://chatapp-backend-85g7.onrender.com",
-    "http://localhost:5173/",
-    "https://gupshup-hemant.vercel.app/",
+    "http://localhost:5173",
+    "https://gupshup-hemant.vercel.app",
 ]
 
 CORS_ALLOWED_ORIGINS = [ 
     "http://localhost",
     "http://127.0.0.1",
-    "http://localhost:5173/",
+    "http://localhost:5173",
     "https://chatapp-backend-85g7.onrender.com",
-    "https://gupshup-hemant.vercel.app/",
+    "https://gupshup-hemant.vercel.app",
 ]
 
 
@@ -72,8 +75,18 @@ INSTALLED_APPS = [
     "notification",
     'chat',
     'landing',
+    'cloudinary',
+    'cloudinary_storage',
     
 ]
+
+cloudinary.config(
+    cloud_name =  os.getenv("CLOUD_NAME"),
+    api_key = os.getenv("CLOUD_API_KEY"),
+    api_secret =  os.getenv("CLOUD_API_SECERT")
+)
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # CHANNEL_LAYERS = {
 #     'default': {
 #         'BACKEND': 'channels_redis.core.RedisChannelLayer',
